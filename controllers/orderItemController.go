@@ -27,17 +27,19 @@ func GetOrderItems() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
+		// Find all order items.
 		result, err := orderItemCollection.Find(context.TODO(), bson.M{})
-
 		defer cancel()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error occur while listing ordered items"})
 		}
 
+		// Decode the query results into a slice of bson.M objects.
 		var allOrderItems []bson.M
 		if err = result.All(ctx, &allOrderItems); err != nil {
 			log.Fatal(err)
 		}
+
 		c.JSON(http.StatusOK, allOrderItems)
 	}
 }
@@ -45,16 +47,17 @@ func GetOrderItems() gin.HandlerFunc {
 func GetOrderItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
 		orderItemId := c.Param("order_item_id")
 		var orderItem models.OrderItem
 
+	  // Find the order item in the database using the provided order_item_id.
 		err := orderItemCollection.FindOne(ctx, bson.M{"orderItem_id": orderItemId}).Decode(&orderItem)
 		defer cancel()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error occur while listing ordered item"})
 			return
 		}
+
 		c.JSON(http.StatusOK, orderItem)
 	}
 }
@@ -63,19 +66,21 @@ func GetOrderItemsByOrder() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		orderId := c.Param("order_id")
 
+		// Call the ItemsByOrder function to get all order items for the specified order.
 		allOrderItems, err := ItemsByOrder(orderId)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error occur while listing order items by order ID"})
 			return
 		}
+
 		c.JSON(http.StatusOK, allOrderItems)
 	}
 }
 
+// ItemsByOrder is a utility function that fetches order items based on the order ID.
+// It performs an aggregation pipeline operation in MongoDB to fetch and format the required data.
 func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
-	// MongoDB aggregation
 
 	// match a particular record with a particular key from database
 	matchStage := bson.D{{"$match", bson.D{{"order_id", id}}}}
@@ -123,6 +128,7 @@ func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 			{"order_items", 1},
 		}}}
 
+	// Execute an aggregation pipeline to fetch and format order items.
 	result, err := orderItemCollection.Aggregate(ctx, mongo.Pipeline{
 		matchStage,
 		lookupStage,
@@ -139,6 +145,9 @@ func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 		panic(err)
 	}
 
+  // Decode the results from the aggregation pipeline.
+  // The results are decoded into a slice of primitive.M, 
+  // where each element of the slice is a map representing a BSON document (an order item in this case).
 	if err = result.All(ctx, &OrderItems); err != nil {
 		panic(err)
 	}
@@ -155,41 +164,54 @@ func CreateOrderItem() gin.HandlerFunc {
 		var orderItemPack OrderItemPack
 		var order models.Order
 
+		// Bind the JSON request body to the OrderItemPack struct.
 		if err := c.BindJSON(&orderItemPack); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
+		// Set the order date to the current time.
 		order.Order_Date, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 
+		// Initialize a slice to hold the order items for batch insertion.（批量插入）
 		orderItemToBeInserted := []interface{}{}
+		// Assign the table ID from the order item pack to the order.
 		order.Table_id = orderItemPack.Table_id
+		// Create a new order and get its ID.
 		order_id := OrderItemOrderCreator(order)
 
+		// Iterate over the order items to process each one.
 		for _, orderItem := range orderItemPack.Order_items {
+			// Assign the generated order ID to each order item
 			orderItem.Order_id = order_id
 
+			// Validate the structure of each order item.
 			validationErr := validate.Struct(orderItem)
-
 			if validationErr != nil {
 				c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
 				return
 			}
 
+			// Generate a unique ID for each order item and set the created and updated timestamps.
 			orderItem.ID = primitive.NewObjectID()
 			orderItem.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 			orderItem.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 			orderItem.Order_item_id = orderItem.ID.Hex()
+
+			// Round the unit price to two decimal places.
 			var num = toFixed(*orderItem.Unit_price, 2)
 			orderItem.Unit_price = &num
+			// Add the order item to the slice for batch insertion.
 			orderItemToBeInserted = append(orderItemToBeInserted, orderItem)
 		}
 
+		// Insert all the order items into the database at once.
 		insertedOrderItems, err := orderItemCollection.InsertMany(ctx, orderItemToBeInserted)
 
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		defer cancel()
 
 		c.JSON(http.StatusOK, insertedOrderItems)
@@ -202,30 +224,33 @@ func UpdateOrderItem() gin.HandlerFunc {
 		var orderItem models.OrderItem
 		orderItemId := c.Param("order_item_id")
 
-		filter := bson.M{"order_item_id": orderItemId}
-
 		var updateObj primitive.D
 
+		// Append the update field
 		if orderItem.Unit_price != nil {
 			updateObj = append(updateObj, bson.E{"unit_price", *&orderItem.Unit_price})
 		}
-
 		if orderItem.Quantity != nil {
 			updateObj = append(updateObj, bson.E{"quantity", *&orderItem.Quantity})
 		}
-
 		if orderItem.Food_id != nil {
 			updateObj = append(updateObj, bson.E{"food_id", *&orderItem.Food_id})
 		}
 
+		// Update the 'updated_at' timestamp
 		orderItem.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		updateObj = append(updateObj, bson.E{"updated_at", orderItem.Updated_at})
 
+		// Set the upsert option to true, to create a new document if no document matches the filter.
 		upsert := true
 		opt := options.UpdateOptions{
 			Upsert: &upsert,
 		}
 
+		// Define a filter to find the order item in the database.
+		filter := bson.M{"order_item_id": orderItemId}
+
+		// Perform the update operation on the database.
 		result, err := orderItemCollection.UpdateOne(
 			ctx,
 			filter,
@@ -240,7 +265,9 @@ func UpdateOrderItem() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 			return
 		}
+
 		defer cancel()
+		
 		c.JSON(http.StatusOK, result)
 	}
 }
