@@ -1,8 +1,9 @@
+## Back-end Development Project with Golang
 Hi! This is Renee!🙋
 Welcome to my Backend project: Restaurant Management backend system development.🍴
 
 Let me introduce my project with you!😊
-[Project Structure📂] 
+## [Project Structure📂] 
 - controllers: Business logic handlers for processing incoming requests and returning responses.
 - models: Data structures that define the schema for our database entities.
 - routes: Route definitions that bind HTTP methods and paths to controller actions.
@@ -10,7 +11,7 @@ Let me introduce my project with you!😊
 - database: Database connection setup and configuration.
 - helpers: Utility functions and shared code used across the application.
 
-[Key Features✅]
+## [Key Features✅]
 🌟Scalable Backend Architecture: 
 Tailored to meet the diverse needs of various business sectors with a focus on scalability and ease of maintenance.
 🌟REST APIs: 
@@ -22,7 +23,7 @@ Integrated JWT for robust authentication, featuring secure token lifecycle manag
 🌟Enhanced System Resilience: 
 Implemented comprehensive error handling and systematic logging, significantly boosting the reliability and traceability of the backend infrastructure.
 
-[Technologies Used🔧]
+## [Technologies Used🔧]
 💻Programming Language: Go (Golang) for its concurrency support and performance efficiency.
 📊Database: MongoDB and its advanced aggregation operation.
 🔐Authentication: Utilize JWT for stateless authentication to ensure secure data access.
