@@ -4,16 +4,16 @@ package main
 import (
 	"os"
 
-	"golang-Restaurant-Management-backend/database"
+	database "golang-Restaurant-Management-backend/database"
 	middleware "golang-Restaurant-Management-backend/middleware"
-
-	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/mongo"
-
 	routes "golang-Restaurant-Management-backend/routes"
+
+	"github.com/gin-gonic/gin" // import Gin Web Framework
+	"go.mongodb.org/mongo-driver/mongo" // use mongo-driver to connect
 )
 
 // set foodCollection as a reference to the 'food' collection in MongoDB
+// foodCollection as a global variable holds the reference point to the 'food' collection in MongoDB
 var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "food")
 
 func main() {
