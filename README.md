@@ -4,7 +4,7 @@
 
 - Let me introduce my project with you!😊
 ## [Project Structure📂] 
-![Project Structure Diagram](project-structure/go structure.jpg)
+![Project Structure Diagram](https://github.com/Reneechang17/Backend_project-Restaurant-Management_Golang/blob/main/project-structure/go%20structure.jpg)
 - controllers: Business logic handlers for processing incoming requests and returning responses.
 - models: Data structures that define the schema for our database entities.
 - routes: Route definitions that bind HTTP methods and paths to controller actions.
