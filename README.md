@@ -11,10 +11,10 @@
 
 ## [Key Features✅]
 - 🌟Scalable Backend Architecture: Tailored to meet the diverse needs of various business sectors with a focus on scalability and ease of maintenance.
-- 🌟REST APIs: Constructed with ##Gin##, providing create/read/update operations and handling complex workflows such as order processing and payment transactions.
-- 🌟Advanced Data Management: Utilized MongoDB's aggregation features for efficient relationship mapping.
-- 🌟Secure Authentication System: Used JWT for authentication, featuring secure token lifecycle management with generation, validation, and refresh functions.
-- 🌟Enhanced System Resilience: Implemented error handling and systematic logging, significantly boosting the reliability and traceability of the backend infrastructure.
+- 🌟REST APIs: Constructed with **Gin**, providing create/read/update operations and handling complex workflows such as order processing and payment transactions.
+- 🌟Advanced Data Management: Utilized MongoDB's **aggregation** features for efficient relationship mapping.
+- 🌟Secure Authentication System: Used **JWT** for authentication, featuring secure token lifecycle management with generation, validation, and refresh functions.
+
 
 ## [Technologies Used🔧]
 - 💻 Programming Language: Go (Golang) for its concurrency support and performance efficiency.
