@@ -1,7 +1,5 @@
-## Back-end Development Project with Golang
-Welcome to my Backend project: Restaurant Management backend system development with Golang.🍴
+## Bistro Ops API with Golang
 
-- Let me introduce my project with you!😊
 ## [Project Structure📂] 
 ![Project Structure Diagram](https://github.com/Reneechang17/Backend_project-Restaurant-Management_Golang/blob/main/project-structure/go%20structure.jpg)
 - controllers: Business logic handlers for processing requests and returning responses.
@@ -13,7 +11,7 @@ Welcome to my Backend project: Restaurant Management backend system development 
 
 ## [Key Features✅]
 - 🌟Scalable Backend Architecture: Tailored to meet the diverse needs of various business sectors with a focus on scalability and ease of maintenance.
-- 🌟REST APIs: Constructed with Gin, providing create/read/update operations and handling complex workflows such as order processing and payment transactions.
+- 🌟REST APIs: Constructed with ##Gin##, providing create/read/update operations and handling complex workflows such as order processing and payment transactions.
 - 🌟Advanced Data Management: Utilized MongoDB's aggregation features for efficient relationship mapping.
 - 🌟Secure Authentication System: Used JWT for authentication, featuring secure token lifecycle management with generation, validation, and refresh functions.
 - 🌟Enhanced System Resilience: Implemented error handling and systematic logging, significantly boosting the reliability and traceability of the backend infrastructure.
