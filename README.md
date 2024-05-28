@@ -15,10 +15,10 @@
 - Advanced Data Management: Utilized MongoDB's **aggregation** features for efficient relationship mapping.
 - 🌟Secure Authentication System: Used **JWT** for authentication, featuring secure token lifecycle management with generation, validation, and refresh functions.
 
-### MongoDB Aggregation capabilities
+### [MongoDB Aggregation capabilities]
 ![MongoDB Aggregation Diagram](https://github.com/Reneechang17/Bistro-Ops-API/blob/main/static/Aggregation.jpg)
 
-### JWT token 
+### [JWT token]
 ![JWT token Diagram](https://github.com/Reneechang17/Bistro-Ops-API/blob/main/static/token.jpg)
 
 ### [Technologies Used🔧]
