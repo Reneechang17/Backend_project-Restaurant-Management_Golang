@@ -1,7 +1,7 @@
 ## Bistro Ops API with Golang
 
 ### [Project Structure📂] 
-![Project Structure Diagram](https://github.com/Reneechang17/Backend_project-Restaurant-Management_Golang/blob/main/project-structure/go%20structure.jpg)
+![Project Structure Diagram](https://github.com/Reneechang17/Bistro-Ops-API/blob/main/static/go%20structure.jpg)
 - controllers: Handle business logic for processing requests and returning responses
 - models: Define the schema for database entities
 - routes: Bind the HTTP methods and paths to controller actions
