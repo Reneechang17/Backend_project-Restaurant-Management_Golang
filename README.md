@@ -7,7 +7,7 @@
 - routes: Bind the HTTP methods and paths to controller actions
 - middleware: Use for authentication that runs before/after controllers
 - database: Set up database connection and configuration
-- helpers: Some shared code and reuse functions 
+- helpers: JWT token functions 
 
 ### [Key Features✅]
 - 🌟Scalable Backend Architecture: Tailored to meet the diverse needs of complex business logics with a focus on scalability and ease of maintenance.
@@ -16,9 +16,10 @@
 - 🌟Secure Authentication System: Used **JWT** for authentication, featuring secure token lifecycle management with generation, validation, and refresh functions.
 
 ### MongoDB Aggregation capabilities
+![MongoDB Aggregation Diagram](https://github.com/Reneechang17/Bistro-Ops-API/blob/main/static/Aggregation.jpg)
 
-### JWT token lifecycle
-
+### JWT token 
+![JWT token Diagram](https://github.com/Reneechang17/Bistro-Ops-API/blob/main/static/token.jpg)
 
 ### [Technologies Used🔧]
 - 💻 Programming Language: Go (Golang) for its concurrency support and performance efficiency.
