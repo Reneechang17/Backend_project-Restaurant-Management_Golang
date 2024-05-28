@@ -9,10 +9,10 @@
 - database: Set up database connection and configuration
 - helpers: JWT token functions 
 
-### [Key Features✅]
-- 🌟Scalable Backend Architecture: Tailored to meet the diverse needs of complex business logics with a focus on scalability and ease of maintenance.
-- 🌟REST APIs: Constructed with **Gin**, providing CURD operations and handling workflows such as order processing and payment transactions.
-- 🌟Advanced Data Management: Utilized MongoDB's **aggregation** features for efficient relationship mapping.
+### [Key Features]
+- Scalable Backend Architecture: Tailored to meet the diverse needs of complex business logics with a focus on scalability and ease of maintenance.
+- REST APIs: Constructed with **Gin**, providing CURD operations and handling workflows such as order processing and payment transactions.
+- Advanced Data Management: Utilized MongoDB's **aggregation** features for efficient relationship mapping.
 - 🌟Secure Authentication System: Used **JWT** for authentication, featuring secure token lifecycle management with generation, validation, and refresh functions.
 
 ### MongoDB Aggregation capabilities
@@ -22,9 +22,10 @@
 ![JWT token Diagram](https://github.com/Reneechang17/Bistro-Ops-API/blob/main/static/token.jpg)
 
 ### [Technologies Used🔧]
-- 💻 Programming Language: Go (Golang) for its concurrency support and performance efficiency.
-- 📊 Database: MongoDB and its advanced aggregation operation.
-- 🔐 Authentication: Utilize JWT for stateless authentication to ensure secure data access.
-- 🛠️ Server Framework: Gin for building the REST APIs with high-performance.
+- Programming Language: Go (Golang) 
+- Database: MongoDB 
+- Authentication: JWT
+- Framework: Gin
+- Others and Test: REST APIs, Postman
 
 
